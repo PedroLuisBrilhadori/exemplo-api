@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import { User } from "./models";
+import { Task, User } from "./models";
 
 const AppDataSource = new DataSource({
   type: "postgres",
@@ -9,13 +9,13 @@ const AppDataSource = new DataSource({
   password: "jireSUi423",
   database: "teste",
   synchronize: true,
-  entities: [User],
+  entities: [User, Task],
 });
 
 export const getDataSource = (): Promise<DataSource> => {
   return new Promise((resolve, reject) => {
     AppDataSource.initialize().then(() => {
       resolve(AppDataSource);
-    });
+    }).catch(error => reject(error))
   });
 };
